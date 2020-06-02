@@ -1,12 +1,13 @@
 from flask import Flask, request
 from json import dumps
-from alice_types import Message
+from pyalice.alice_types import Message
 
 
 class AliceBot:
-    def __init__(self, app: Flask, page='/post', remember_state=True):
+    def __init__(self, app: Flask, page='/post', remember_state=True, ignore_start=False):
         self.app = app
         self.remember_state = remember_state
+        self.ignore_start = ignore_start
         self.last_states = {}
         self.message_handlers = []
         self.images = {}
@@ -27,11 +28,15 @@ class AliceBot:
 
             return dumps(chat.get_response())
 
-    def message_handler(self, start_handler=False, unknown_handler=False, filter_func=lambda message: True):
+    def message_handler(self, start_handler=False, unknown_handler=False, tokens=None, filter_func=lambda message: True):
         def decorator(func):
             def wrapped(chat: Chat, message: Message, *args, **kwargs):
-                if filter_func(message) and message.session.new == start_handler:
-                    func(chat, message, *args, **kwargs)
+                if (
+                    filter_func(message)
+                    and (message.session.new == start_handler and not self.ignore_start or self.ignore_start and not start_handler)
+                    and (tokens is None or tokens is not None and ' '.join(message.request.nlu.tokens) in tokens)
+                ):
+                    func(chat=chat, message=message, *args, **kwargs)
             if unknown_handler:
                 self.unknown_handler = wrapped
             else:
@@ -131,7 +136,6 @@ class Chat:
         self.response['response']['end_session'] = end
 
     def set_session_state(self, value):
-        """https://yandex.ru/dev/dialogs/alice/doc/session-persistence-docpage/"""
         if self.bot.remember_state:
             self.bot.last_states[self.session_id] = value
         self.response['session_state']['value'] = value
