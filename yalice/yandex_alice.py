@@ -1,6 +1,6 @@
 from flask import Flask, request
 from json import dumps
-from pyalice.alice_types import Message
+from yalice.alice_types import Message
 
 
 class AliceBot:

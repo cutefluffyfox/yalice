@@ -1,17 +1,17 @@
-# pyalice
+# yalice
 Python library for writing applications on yandex voice assistant
 
 
-# getting started
-```cmd
-pip install -r requirements.txt
+# Getting started
+```
+pip install yalice
 ```
 
 
-This library is a wrapper for Yandex Alice, not independent library for writing web based applications, so initialization takes in an object of the type Flask (you already installed Flask from requirements.txt)
+This library is a wrapper for Yandex Alice, not independent library for writing web based applications, so initialization takes in an object of the type Flask
 ```python
 from flask import Flask
-from yandex_alice import AliceBot, Message, Chat
+from yalice import AliceBot, Message, Chat
 
 app = Flask(__name__)
 bot = AliceBot(app)
@@ -37,7 +37,7 @@ def start(chat: Chat, message: Message):
     chat.send_message('Hello, I am annoying Alice. I will repeat each your word!')
 
 
-@bot.message_handler(filter_func=lambda message: message.request.original_utterance == 'Stop!')
+@bot.message_handler(tokens=['stop'], filter_func=lambda message: message.request.type == 'ButtonPressed')
 def stop(chat: Chat, message: Message):
     chat.send_message('It was a fun game!')
     chat.end_session()
@@ -105,3 +105,8 @@ Chat object stores request to return. Now is has methods
 
 # Message object
 Message object is parsed json, to see json structure [click here](https://yandex.ru/dev/dialogs/alice/doc/protocol-docpage/)
+
+# Links
+Telegram [@cutefluffyfox](https://t.me/cutefluffyfox)<br>
+VK [@cutefluffyfox](https://vk.com/cutefluffyfox)<br>
+Expired by [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI)

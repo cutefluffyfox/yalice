@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="cutefluffyfox",
+    name="yalice",
     version="0.1",
     author="cutefluffyfox",
     author_email="mishkazel1@mail.ru",
@@ -13,6 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/cutefluffyfox/pyalice",
     packages=setuptools.find_packages(),
+    install_requires=['flask'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
