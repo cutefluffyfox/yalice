@@ -108,5 +108,4 @@ Message object is parsed json, to see json structure [click here](https://yandex
 
 # Links
 Telegram [@cutefluffyfox](https://t.me/cutefluffyfox)<br>
-VK [@cutefluffyfox](https://vk.com/cutefluffyfox)<br>
-Expired by [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI)
+Inspired by [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI)
